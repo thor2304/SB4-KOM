@@ -5,20 +5,22 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import dk.sdu.mmmi.cbse.main.Game;
 
-public class Player extends SpaceObject {
+public class Enemy extends SpaceObject {
 
     private boolean left;
     private boolean right;
     private boolean up;
 
-    private float maxSpeed;
-    private float acceleration;
-    private float deceleration;
+    private final float maxSpeed;
+    private final float acceleration;
+    private final float deceleration;
 
-    public Player() {
+    private final Player player;
 
-        x = Game.WIDTH / 2;
-        y = Game.HEIGHT / 2;
+    public Enemy(Player player) {
+
+        x = Game.WIDTH / 2 + 50;
+        y = Game.HEIGHT / 2 + 50;
 
         maxSpeed = 300;
         acceleration = 200;
@@ -29,6 +31,8 @@ public class Player extends SpaceObject {
 
         radians = 3.1415f / 2;
         rotationSpeed = 3;
+
+        this.player = player;
 
     }
 
@@ -59,9 +63,15 @@ public class Player extends SpaceObject {
     }
 
     public void update(float dt) {
+        setUp(false);
 
-//        System.out.println(radians % (Math.PI * 2));
 
+        int turn = targetPlayer();
+        System.out.println(turn);
+
+        boolean tempLeft = turn > 0;
+        setLeft(tempLeft);
+        setRight(!tempLeft);
 
         // turning
         if (left) {
@@ -115,6 +125,27 @@ public class Player extends SpaceObject {
 
         sr.end();
 
+    }
+
+    private int targetPlayer(){
+        double xDiff = this.x - player.x;
+        double yDiff = this.y - player.y;
+        double dist = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+
+        double angle = Math.acos(xDiff / dist);
+        angle = yDiff < 0 ? -angle : angle;
+        angle = angle < 0 ? angle + (Math.PI * 2) : angle;
+
+//        System.out.println("xAngle" + xAngle);
+//        System.out.println(yAngle);
+
+
+        if (angle > radians + Math.PI % (Math.PI * 2)){
+            return 1;
+        }else if (angle < radians + Math.PI % (Math.PI * 2)){
+            return -1;
+        }
+        return 0;
     }
 
 }
