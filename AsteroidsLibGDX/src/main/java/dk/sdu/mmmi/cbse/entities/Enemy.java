@@ -66,8 +66,8 @@ public class Enemy extends SpaceObject {
         setUp(false);
 
 
-        int turn = targetPlayer();
-        System.out.println(turn);
+        double turn = targetPlayer();
+//        System.out.println(turn);
 
         boolean tempLeft = turn > 0;
         setLeft(tempLeft);
@@ -127,25 +127,31 @@ public class Enemy extends SpaceObject {
 
     }
 
-    private int targetPlayer(){
+    private double targetPlayer(){
         double xDiff = this.x - player.x;
         double yDiff = this.y - player.y;
         double dist = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 
-        double angle = Math.acos(xDiff / dist);
-        angle = yDiff < 0 ? -angle : angle;
-        angle = angle < 0 ? angle + (Math.PI * 2) : angle;
+        double targetAngle = Math.acos(xDiff / dist);
+        targetAngle = yDiff < 0 ? -targetAngle : targetAngle;
+        targetAngle = targetAngle < 0 ? Math.PI * 2 + targetAngle : targetAngle;
 
-//        System.out.println("xAngle" + xAngle);
-//        System.out.println(yAngle);
+//        double anglediff = angle - ((radians + Math.PI) % (Math.PI * 2));
+        double thisAngle = ((radians + Math.PI) % (Math.PI * 2));
+        thisAngle = thisAngle < 0 ? thisAngle + (Math.PI * 2) : thisAngle;
+        double angleDiff = targetAngle - thisAngle;
+
+        angleDiff = angleDiff > Math.PI ? angleDiff - (Math.PI*2) : angleDiff;
+        angleDiff = angleDiff < -Math.PI ? angleDiff + (Math.PI*2) : angleDiff;
+
+        System.out.println("Angle: " + targetAngle);
+        System.out.println("Anglediff: " + angleDiff + " Second part: " + (Math.PI * 2 - angleDiff));
 
 
-        if (angle > radians + Math.PI % (Math.PI * 2)){
-            return 1;
-        }else if (angle < radians + Math.PI % (Math.PI * 2)){
-            return -1;
-        }
-        return 0;
+
+        return Math.abs(angleDiff) > 0.05 ? angleDiff: 0;
+//        return Math.min(anglediff, Math.PI * 2 - anglediff);
+
     }
 
 }
