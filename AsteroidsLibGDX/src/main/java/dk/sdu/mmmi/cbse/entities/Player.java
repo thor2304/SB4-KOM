@@ -21,14 +21,14 @@ public class Player extends SpaceObject {
         y = Game.HEIGHT / 2;
 
         maxSpeed = 300;
-        acceleration = 200;
-        deceleration = 10;
+        acceleration = 600;
+        deceleration = 200;
 
         shapex = new float[4];
         shapey = new float[4];
 
         radians = 3.1415f / 2;
-        rotationSpeed = 3;
+        rotationSpeed = 5;
 
     }
 

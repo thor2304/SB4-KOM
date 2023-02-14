@@ -111,7 +111,7 @@ public class Enemy extends SpaceObject {
 
     public void draw(ShapeRenderer sr) {
 
-        sr.setColor(1, 1, 1, 1);
+        sr.setColor(1, 0, 0, 1);
 
         sr.begin(ShapeType.Line);
 
@@ -144,8 +144,8 @@ public class Enemy extends SpaceObject {
         angleDiff = angleDiff > Math.PI ? angleDiff - (Math.PI*2) : angleDiff;
         angleDiff = angleDiff < -Math.PI ? angleDiff + (Math.PI*2) : angleDiff;
 
-        System.out.println("Angle: " + targetAngle);
-        System.out.println("Anglediff: " + angleDiff + " Second part: " + (Math.PI * 2 - angleDiff));
+//        System.out.println("Angle: " + targetAngle);
+//        System.out.println("Anglediff: " + angleDiff + " Second part: " + (Math.PI * 2 - angleDiff));
 
 
 
