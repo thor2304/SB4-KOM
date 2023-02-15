@@ -17,8 +17,8 @@ public class Player extends SpaceObject {
 
     public Player() {
 
-        x = Game.WIDTH / 2;
-        y = Game.HEIGHT / 2;
+        x = Game.WIDTH / 2f;
+        y = Game.HEIGHT / 2f;
 
         maxSpeed = 300;
         acceleration = 600;
