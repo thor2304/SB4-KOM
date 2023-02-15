@@ -44,10 +44,11 @@ public class Game
         );
 
         IGamePluginService playerPlugin = new PlayerPlugin();
+        entityPlugins.add(playerPlugin);
 
         IEntityProcessingService playerProcess = new PlayerControlSystem();
-        entityPlugins.add(playerPlugin);
         entityProcessors.add(playerProcess);
+
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {
             iGamePlugin.start(gameData, world);
