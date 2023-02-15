@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dk.sdu.mmmi.cbse.BulletSystem.BulletControlSystem;
+import dk.sdu.mmmi.cbse.BulletSystem.BulletPlugin;
 import dk.sdu.mmmi.cbse.asteroidSystem.AsteroidControlSystem;
 import dk.sdu.mmmi.cbse.asteroidSystem.AsteroidPlugin;
 import dk.sdu.mmmi.cbse.collisionSystem.CircularCollisionSystem;
@@ -68,6 +70,12 @@ public class Game
 
         IEntityProcessingService AsteroidProcess = new AsteroidControlSystem();
         entityProcessors.add(AsteroidProcess);
+
+        IGamePluginService bulletPlugin = new BulletPlugin();
+        entityPlugins.add(bulletPlugin);
+
+        IEntityProcessingService bulletProcess = new BulletControlSystem();
+        entityProcessors.add(bulletProcess);
 
         // Add postprocessors
         entityPostProcessors.add(new CircularCollisionSystem());
