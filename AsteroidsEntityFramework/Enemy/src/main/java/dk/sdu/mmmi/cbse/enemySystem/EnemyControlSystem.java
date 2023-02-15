@@ -9,6 +9,8 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.playersystem.Player;
 
+import java.util.List;
+
 /**
  *
  * @author jcs
@@ -17,14 +19,29 @@ public class EnemyControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        PositionPart playerPosition = world.getEntities(Player.class).get(0).getPart(PositionPart.class);
+        List<Entity> playerList = world.getEntities(Player.class);
+
+        boolean targetPlayer = true;
+        if (playerList.size() < 1){
+            targetPlayer = false;
+        }
+
+        PositionPart playerPosition = null;
+
+        if (targetPlayer){
+            playerPosition = playerList.get(0).getPart(PositionPart.class);
+        }
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
             ColorPart colorPart = enemy.getPart(ColorPart.class);
 
-            double turn = targetPlayer(positionPart, playerPosition);
+            double turn = 0;
+
+            if (targetPlayer){
+                turn = targetPlayer(positionPart, playerPosition);
+            }
 //        System.out.println(turn);
 
             movingPart.setUp(false);
@@ -32,7 +49,7 @@ public class EnemyControlSystem implements IEntityProcessingService {
             movingPart.setLeft(turn > 0);
             movingPart.setRight(turn < 0);
 
-            if(turn == 0){
+            if(turn == 0 && targetPlayer){
                 movingPart.setUp(true);
             }
 

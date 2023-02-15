@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dk.sdu.mmmi.cbse.asteroidSystem.AsteroidControlSystem;
 import dk.sdu.mmmi.cbse.asteroidSystem.AsteroidPlugin;
+import dk.sdu.mmmi.cbse.collisionSystem.CircularCollisionSystem;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.enemySystem.EnemyControlSystem;
 import dk.sdu.mmmi.cbse.enemySystem.EnemyPlugin;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
@@ -29,6 +31,7 @@ public class Game
 
     private final GameData gameData = new GameData();
     private List<IEntityProcessingService> entityProcessors = new ArrayList<>();
+    private List<IPostEntityProcessingService> entityPostProcessors = new ArrayList<>();
     private List<IGamePluginService> entityPlugins = new ArrayList<>();
     private World world = new World();
 
@@ -66,6 +69,9 @@ public class Game
         IEntityProcessingService AsteroidProcess = new AsteroidControlSystem();
         entityProcessors.add(AsteroidProcess);
 
+        // Add postprocessors
+        entityPostProcessors.add(new CircularCollisionSystem());
+
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {
@@ -93,6 +99,11 @@ public class Game
         // Update
         for (IEntityProcessingService entityProcessorService : entityProcessors) {
             entityProcessorService.process(gameData, world);
+        }
+
+        // PostProcessing
+        for (IPostEntityProcessingService postEntityProcessingService : entityPostProcessors) {
+            postEntityProcessingService.process(gameData, world);
         }
     }
 

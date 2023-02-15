@@ -57,4 +57,8 @@ public class Entity implements Serializable {
     public void setShapeY(float[] shapeY) {
         this.shapeY = shapeY;
     }
+
+    public void handleCollision(Entity other, World world){
+        world.removeEntity(other);
+    }
 }

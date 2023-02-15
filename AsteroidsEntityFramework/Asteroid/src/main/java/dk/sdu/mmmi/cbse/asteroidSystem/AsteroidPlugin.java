@@ -52,6 +52,8 @@ public class AsteroidPlugin implements IGamePluginService {
         asteroid1.add(new PositionPart(x, y, radians));
         asteroid1.add(new ColorPart(177, 91, 46, 1));
 
+        asteroid1.setRadius(size);
+
         MovingPart movingPart = asteroid1.getPart(MovingPart.class);
         movingPart.setUp(true);
         // Causes the asteroids to move in a circular pattern.
