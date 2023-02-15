@@ -36,7 +36,7 @@ public class PlayerPlugin implements IGamePluginService {
         Entity playerShip = new Player();
         playerShip.add(new MovingPart(deceleration, acceleration, maxSpeed, rotationSpeed));
         playerShip.add(new PositionPart(x, y, radians));
-        playerShip.add(new ColorPart(1, 1, 1, 1));
+        playerShip.add(new ColorPart());
 
         return playerShip;
     }

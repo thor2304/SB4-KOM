@@ -4,7 +4,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 
 public class ColorPart implements EntityPart {
-    private double[] colors;
+    private final double[] colors;
 
     public ColorPart(double r, double g, double b, double a) {
         colors = new double[4];
@@ -15,7 +15,22 @@ public class ColorPart implements EntityPart {
     }
 
     public ColorPart() {
-        this(1, 1, 1, 1);
+        this(1.0, 1.0, 1.0, 1.0);
+    }
+
+    /**
+     * Takes in an rgb value from 0 to 255 (will be clamped to either value if >255 or <0
+     */
+    public ColorPart(int r, int g, int b, int a){
+        this(
+                clamp(r), clamp(g), clamp(b), clamp(a)
+        );
+    }
+
+    private static double clamp(int col){
+        int top = Math.min(255, col);
+        int bot = Math.max(0, top);
+        return bot / 255.0;
     }
 
     public double getR() {

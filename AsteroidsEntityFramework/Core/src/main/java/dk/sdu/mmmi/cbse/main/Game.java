@@ -5,12 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dk.sdu.mmmi.cbse.asteroidSystem.AsteroidControlSystem;
+import dk.sdu.mmmi.cbse.asteroidSystem.AsteroidPlugin;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.enemySystem.EnemyControlSystem;
+import dk.sdu.mmmi.cbse.enemySystem.EnemyPlugin;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.playersystem.PlayerControlSystem;
 import dk.sdu.mmmi.cbse.playersystem.PlayerPlugin;
@@ -35,7 +39,7 @@ public class Game
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
+        cam.translate(gameData.getDisplayWidth() / 2f, gameData.getDisplayHeight() / 2f);
         cam.update();
 
         sr = new ShapeRenderer();
@@ -49,6 +53,19 @@ public class Game
 
         IEntityProcessingService playerProcess = new PlayerControlSystem();
         entityProcessors.add(playerProcess);
+
+        IGamePluginService enemyPlugin = new EnemyPlugin();
+        entityPlugins.add(enemyPlugin);
+
+        IEntityProcessingService enemyProcess = new EnemyControlSystem();
+        entityProcessors.add(enemyProcess);
+
+        IGamePluginService asteroidPlugin = new AsteroidPlugin();
+        entityPlugins.add(asteroidPlugin);
+
+        IEntityProcessingService AsteroidProcess = new AsteroidControlSystem();
+        entityProcessors.add(AsteroidProcess);
+
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {

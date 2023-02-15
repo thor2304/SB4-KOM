@@ -11,8 +11,8 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 public class EnemyPlugin implements IGamePluginService {
 
     private Entity enemy;
-    private final int outerSize = 8;
-    private final int innerSize = 5;
+    private final int outerSize = 5;
+    private final int innerSize = 3;
 
     public EnemyPlugin() {
     }
@@ -27,10 +27,10 @@ public class EnemyPlugin implements IGamePluginService {
 
     private Entity createEnemyShip(GameData gameData) {
 
-        float deceleration = 10;
-        float acceleration = 200 + deceleration;
+        float deceleration = 200;
+        float acceleration = 400 + deceleration;
         float maxSpeed = 300;
-        float rotationSpeed = 5;
+        float rotationSpeed = 8;
         float x = gameData.getDisplayWidth() / 2f + 50;
         float y = gameData.getDisplayHeight() / 2f + 50;
         float radians = (float) Math.PI / 2;
@@ -38,7 +38,7 @@ public class EnemyPlugin implements IGamePluginService {
         Entity enemyShip = new Enemy(outerSize, innerSize);
         enemyShip.add(new MovingPart(deceleration, acceleration, maxSpeed, rotationSpeed));
         enemyShip.add(new PositionPart(x, y, radians));
-        enemyShip.add(new ColorPart(1, 0, 0, 1));
+        enemyShip.add(new ColorPart(1.0, 0, 0, 1));
 
         return enemyShip;
     }
