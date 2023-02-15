@@ -33,8 +33,16 @@ public class AsteroidPlugin implements IGamePluginService {
 
         float deceleration = 200;
         float acceleration = 400 + deceleration;
+
         float maxSpeed = 30;
-        float rotationSpeed = 8;
+        float speedVariance = maxSpeed / 3;
+        maxSpeed -= speedVariance * Math.random();
+        float rotationSpeed = 2;
+        float rotationVariance = rotationSpeed / 2;
+        rotationSpeed -= rotationVariance * Math.random();
+
+
+        //Position
         float x = gameData.getDisplayWidth() * (float)(Math.random());
         float y = gameData.getDisplayHeight() * (float)(Math.random());
         float radians = (float) (Math.PI * 2 * Math.random());
@@ -46,6 +54,11 @@ public class AsteroidPlugin implements IGamePluginService {
 
         MovingPart movingPart = asteroid1.getPart(MovingPart.class);
         movingPart.setUp(true);
+        // Causes the asteroids to move in a circular pattern.
+        // To make them spin nicely but still move straight, the visual must be disconnected from the positionPart
+//        boolean spinLeft = Math.random() >0.5;
+//        movingPart.setLeft(spinLeft);
+//        movingPart.setRight(!spinLeft);
 
         asteroid1.setShapeX(new float[verticeCount]);
         asteroid1.setShapeY(new float[verticeCount]);

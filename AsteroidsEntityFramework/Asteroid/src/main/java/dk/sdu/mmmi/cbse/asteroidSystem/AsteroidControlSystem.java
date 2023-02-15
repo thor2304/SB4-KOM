@@ -17,8 +17,6 @@ public class AsteroidControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        PositionPart playerPosition = world.getEntities(Player.class).get(0).getPart(PositionPart.class);
-
         for (Entity asteroid : world.getEntities(Asteroid.class)) {
             PositionPart positionPart = asteroid.getPart(PositionPart.class);
             MovingPart movingPart = asteroid.getPart(MovingPart.class);
