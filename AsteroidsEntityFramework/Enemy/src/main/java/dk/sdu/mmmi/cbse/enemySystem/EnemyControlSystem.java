@@ -42,7 +42,6 @@ public class EnemyControlSystem implements IEntityProcessingService {
             if (targetPlayer){
                 turn = targetPlayer(positionPart, playerPosition);
             }
-//        System.out.println(turn);
 
             movingPart.setUp(false);
 

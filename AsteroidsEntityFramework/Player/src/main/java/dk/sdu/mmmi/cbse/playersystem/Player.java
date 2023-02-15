@@ -12,6 +12,6 @@ public class Player extends Entity {
 
     @Override
     public void handleCollision(Entity other, World world) {
-        super.handleCollision(other, world);
+        super.handleCollision(this, world);
     }
 }
