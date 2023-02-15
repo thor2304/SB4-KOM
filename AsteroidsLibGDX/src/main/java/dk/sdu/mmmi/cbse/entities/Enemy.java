@@ -19,8 +19,8 @@ public class Enemy extends SpaceObject {
 
     public Enemy(Player player) {
 
-        x = Game.WIDTH / 2 + 50;
-        y = Game.HEIGHT / 2 + 50;
+        x = Game.WIDTH / 2f + 50;
+        y = Game.HEIGHT / 2f + 50;
 
         maxSpeed = 300;
         acceleration = 200;
@@ -29,7 +29,7 @@ public class Enemy extends SpaceObject {
         shapex = new float[4];
         shapey = new float[4];
 
-        radians = 3.1415f / 2;
+        radians = (float) Math.PI / 2;
         rotationSpeed = 3;
 
         this.player = player;
