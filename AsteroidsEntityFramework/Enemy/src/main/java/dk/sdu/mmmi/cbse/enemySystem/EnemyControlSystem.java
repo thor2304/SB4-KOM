@@ -2,14 +2,12 @@ package dk.sdu.mmmi.cbse.enemySystem;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.LEFT;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.RIGHT;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.UP;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.playersystem.Player;
 
 /**
  *
@@ -19,17 +17,26 @@ public class EnemyControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
+        PositionPart playerPosition = world.getEntities(Player.class).get(0).getPart(PositionPart.class);
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
             ColorPart colorPart = enemy.getPart(ColorPart.class);
 
-            movingPart.setLeft(gameData.getKeys().isDown(LEFT));
-            movingPart.setRight(gameData.getKeys().isDown(RIGHT));
-            movingPart.setUp(gameData.getKeys().isDown(UP));
-            
-            
+            double turn = targetPlayer(positionPart, playerPosition);
+//        System.out.println(turn);
+
+            movingPart.setUp(false);
+
+            movingPart.setLeft(turn > 0);
+            movingPart.setRight(turn < 0);
+
+            if(turn == 0){
+                movingPart.setUp(true);
+            }
+
+
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
             colorPart.process(gameData, enemy);
@@ -62,6 +69,33 @@ public class EnemyControlSystem implements IEntityProcessingService {
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
+    }
+
+    private double targetPlayer(PositionPart positionPart, PositionPart playerPosition){
+        double xDiff = positionPart.getX() - playerPosition.getX();
+        double yDiff = positionPart.getY() - playerPosition.getY();
+        double dist = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+
+        double targetAngle = Math.acos(xDiff / dist);
+        targetAngle = yDiff < 0 ? -targetAngle : targetAngle;
+        targetAngle = targetAngle < 0 ? Math.PI * 2 + targetAngle : targetAngle;
+
+//        double anglediff = angle - ((radians + Math.PI) % (Math.PI * 2));
+        double thisAngle = ((positionPart.getRadians() + Math.PI) % (Math.PI * 2));
+        thisAngle = thisAngle < 0 ? thisAngle + (Math.PI * 2) : thisAngle;
+        double angleDiff = targetAngle - thisAngle;
+
+        angleDiff = angleDiff > Math.PI ? angleDiff - (Math.PI*2) : angleDiff;
+        angleDiff = angleDiff < -Math.PI ? angleDiff + (Math.PI*2) : angleDiff;
+
+//        System.out.println("Angle: " + targetAngle);
+//        System.out.println("Anglediff: " + angleDiff + " Second part: " + (Math.PI * 2 - angleDiff));
+
+
+
+        return Math.abs(angleDiff) > 0.05 ? angleDiff: 0;
+//        return Math.min(anglediff, Math.PI * 2 - anglediff);
+
     }
 
 }
