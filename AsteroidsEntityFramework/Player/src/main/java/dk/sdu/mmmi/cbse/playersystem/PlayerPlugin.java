@@ -6,7 +6,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
-import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.serviceInterfaces.IGamePluginService;
 
 public class PlayerPlugin implements IGamePluginService {
 
@@ -17,6 +17,7 @@ public class PlayerPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
+        System.out.println("Starting player");
         
         // Add entities to the world
         player = createPlayerShip(gameData);

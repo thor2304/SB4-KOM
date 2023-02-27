@@ -14,9 +14,12 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
-import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
-import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.serviceInterfaces.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.serviceInterfaces.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.serviceInterfaces.IPostEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.services.EntityProcessingService;
+import dk.sdu.mmmi.cbse.common.services.GamePluginService;
+import dk.sdu.mmmi.cbse.common.services.PostEntityProcessingService;
 import dk.sdu.mmmi.cbse.enemySystem.EnemyControlSystem;
 import dk.sdu.mmmi.cbse.enemySystem.EnemyPlugin;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
@@ -32,14 +35,10 @@ public class Game
     private ShapeRenderer sr;
 
     private final GameData gameData = new GameData();
-    private List<IEntityProcessingService> entityProcessors = new ArrayList<>();
-    private List<IPostEntityProcessingService> entityPostProcessors = new ArrayList<>();
-    private List<IGamePluginService> entityPlugins = new ArrayList<>();
-    private World world = new World();
+    private final World world = new World();
 
     @Override
     public void create() {
-
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -53,38 +52,7 @@ public class Game
                 new GameInputProcessor(gameData)
         );
 
-        IGamePluginService playerPlugin = new PlayerPlugin();
-        entityPlugins.add(playerPlugin);
-
-        IEntityProcessingService playerProcess = new PlayerControlSystem();
-        entityProcessors.add(playerProcess);
-
-        IGamePluginService enemyPlugin = new EnemyPlugin();
-        entityPlugins.add(enemyPlugin);
-
-        IEntityProcessingService enemyProcess = new EnemyControlSystem();
-        entityProcessors.add(enemyProcess);
-
-        IGamePluginService asteroidPlugin = new AsteroidPlugin();
-        entityPlugins.add(asteroidPlugin);
-
-        IEntityProcessingService AsteroidProcess = new AsteroidControlSystem();
-        entityProcessors.add(AsteroidProcess);
-
-        IGamePluginService bulletPlugin = new BulletPlugin();
-        entityPlugins.add(bulletPlugin);
-
-        IEntityProcessingService bulletProcess = new BulletControlSystem();
-        entityProcessors.add(bulletProcess);
-
-        // Add postprocessors
-        entityPostProcessors.add(new CircularCollisionSystem());
-
-
-        // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : entityPlugins) {
-            iGamePlugin.start(gameData, world);
-        }
+        GamePluginService.getInstance().startAll(gameData, world);
     }
 
     @Override
@@ -104,15 +72,8 @@ public class Game
     }
 
     private void update() {
-        // Update
-        for (IEntityProcessingService entityProcessorService : entityProcessors) {
-            entityProcessorService.process(gameData, world);
-        }
-
-        // PostProcessing
-        for (IPostEntityProcessingService postEntityProcessingService : entityPostProcessors) {
-            postEntityProcessingService.process(gameData, world);
-        }
+        EntityProcessingService.getInstance().processAll(gameData, world);
+        PostEntityProcessingService.getInstance().processAll(gameData, world);
     }
 
     private void draw() {
@@ -139,6 +100,8 @@ public class Game
 
     @Override
     public void resize(int width, int height) {
+        gameData.setDisplayWidth(Gdx.graphics.getWidth());
+        gameData.setDisplayHeight(Gdx.graphics.getHeight());
     }
 
     @Override
@@ -151,5 +114,6 @@ public class Game
 
     @Override
     public void dispose() {
+        GamePluginService.getInstance().stopAll(gameData, world);
     }
 }
