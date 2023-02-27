@@ -8,7 +8,6 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
 
 public class BulletPlugin implements IGamePluginService {
