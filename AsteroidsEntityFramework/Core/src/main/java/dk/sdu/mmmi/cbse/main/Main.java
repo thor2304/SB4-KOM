@@ -11,13 +11,9 @@ public class Main {
 				new Lwjgl3ApplicationConfiguration();
 		cfg.setTitle("Asteroids");
 		cfg.setResizable(false);
-//		cfg.width = 500;
-//		cfg.height = 400;
-//		cfg.useGL30 = false;
-//		cfg.resizable = false;
+
+		cfg.setWindowedMode(1800, 1000);
 
 		new Lwjgl3Application(new Game(), cfg);
-		
 	}
-	
 }
