@@ -5,28 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import dk.sdu.mmmi.cbse.BulletSystem.BulletControlSystem;
-import dk.sdu.mmmi.cbse.BulletSystem.BulletPlugin;
-import dk.sdu.mmmi.cbse.asteroidSystem.AsteroidControlSystem;
-import dk.sdu.mmmi.cbse.asteroidSystem.AsteroidPlugin;
-import dk.sdu.mmmi.cbse.collisionSystem.CircularCollisionSystem;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
-import dk.sdu.mmmi.cbse.common.serviceInterfaces.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.common.serviceInterfaces.IGamePluginService;
-import dk.sdu.mmmi.cbse.common.serviceInterfaces.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.EntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.GamePluginService;
 import dk.sdu.mmmi.cbse.common.services.PostEntityProcessingService;
-import dk.sdu.mmmi.cbse.enemySystem.EnemyControlSystem;
-import dk.sdu.mmmi.cbse.enemySystem.EnemyPlugin;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
-import dk.sdu.mmmi.cbse.playersystem.PlayerControlSystem;
-import dk.sdu.mmmi.cbse.playersystem.PlayerPlugin;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Game
         implements ApplicationListener {
