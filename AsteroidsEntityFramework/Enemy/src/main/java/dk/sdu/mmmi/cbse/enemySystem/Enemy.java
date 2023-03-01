@@ -2,7 +2,7 @@ package dk.sdu.mmmi.cbse.enemySystem;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.playersystem.Player;
+import dk.sdu.mmmi.cbse.playerSystem.Player;
 
 /**
  *

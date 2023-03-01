@@ -7,7 +7,7 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.serviceInterfaces.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.playersystem.Player;
+import dk.sdu.mmmi.cbse.playerSystem.Player;
 
 import java.util.List;
 
