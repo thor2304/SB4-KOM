@@ -8,6 +8,7 @@
     </parent>
     <artifactId>Player</artifactId>
     <packaging>jar</packaging>
+    <name>Player</name>
 
     <build>
         <plugins>

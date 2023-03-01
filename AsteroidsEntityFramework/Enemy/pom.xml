@@ -20,6 +20,7 @@
     </parent>
     <artifactId>Enemy</artifactId>
     <packaging>jar</packaging>
+    <name>Enemy</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

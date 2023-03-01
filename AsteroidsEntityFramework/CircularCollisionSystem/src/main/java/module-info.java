@@ -1,4 +1,4 @@
 module CircularCollisionSystem {
-    exports dk.sdu.mmmi.cbse.collisionSystem;
+//    exports dk.sdu.mmmi.cbse.collisionSystem;
     requires Common;
 }

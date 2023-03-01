@@ -1,3 +1,3 @@
-module Core {
-    requires Common;
-}
+//module Core {
+//    requires Common;
+//}

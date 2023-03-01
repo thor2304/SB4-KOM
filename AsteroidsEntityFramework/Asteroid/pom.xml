@@ -19,6 +19,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>Asteroid</artifactId>
+    <name>Asteroid</name>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
