@@ -4,7 +4,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
-import dk.sdu.mmmi.cbse.common.data.entityparts.ImagePart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.SpritePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.serviceInterfaces.IGamePluginService;
@@ -43,7 +43,7 @@ public class PlayerPlugin implements IGamePluginService {
         String path = this.getClass().getPackageName();
         path = path.replace(".", "/");
         path = path + "/unnamed.atlas";
-        playerShip.add(new ImagePart(path));
+        playerShip.add(new SpritePart(path, "ubuntu"));
 
         playerShip.setRadius(8);
 

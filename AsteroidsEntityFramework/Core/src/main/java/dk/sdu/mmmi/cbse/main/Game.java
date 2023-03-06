@@ -2,10 +2,8 @@ package dk.sdu.mmmi.cbse.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,13 +12,11 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
-import dk.sdu.mmmi.cbse.common.data.entityparts.ImagePart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.SpritePart;
 import dk.sdu.mmmi.cbse.common.services.EntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.GamePluginService;
 import dk.sdu.mmmi.cbse.common.services.PostEntityProcessingService;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
-
-import java.io.File;
 
 public class Game
         implements ApplicationListener {
@@ -48,16 +44,16 @@ public class Game
 
         GamePluginService.getInstance().startAll(gameData, world);
 
-        System.out.println(this.getClass().getPackageName());
-        System.out.println(this.getClass().getPackage());
-        FileHandle handle = Gdx.files.classpath("dk/sdu/mmmi/cbse/playerSystem/unnamed.png");
-        if(handle.exists()){
-            Texture texture = new Texture(handle);
-            System.out.println(texture.getHeight());
-            System.out.println(texture);
-        }else {
-            System.out.println(handle.list());
-        }
+//        System.out.println(this.getClass().getPackageName());
+//        System.out.println(this.getClass().getPackage());
+//        FileHandle handle = Gdx.files.classpath("dk/sdu/mmmi/cbse/playerSystem/unnamed.png");
+//        if(handle.exists()){
+//            Texture texture = new Texture(handle);
+//            System.out.println(texture.getHeight());
+//            System.out.println(texture);
+//        }else {
+//            System.out.println(handle.list());
+//        }
     }
 
     @Override
@@ -84,19 +80,24 @@ public class Game
     private void draw() {
         SpriteBatch batch = new SpriteBatch();
         for (Entity entity : world.getEntities()) {
-            if (entity.getPart(ImagePart.class) != null){
-                ImagePart imgPath = entity.getPart(ImagePart.class);
-                TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.classpath(imgPath.getPath()));
-                Sprite sprite = textureAtlas.createSprite("ubuntu");
+            ColorPart colorPart = entity.getPart(ColorPart.class);
 
-                Gdx.gl.glClearColor(1, 0, 0, 1);
+            if (entity.getPart(SpritePart.class) != null){
+                SpritePart imgPart = entity.getPart(SpritePart.class);
+                Sprite sprite = imgPart.getSprite();
+
+                float x = entity.getShapeX()[0];
+                float y = entity.getShapeY()[0];
+
+                Gdx.gl.glClearColor((float) colorPart.getR(), (float) colorPart.getG(), (float) colorPart.getB(), (float) colorPart.getA());
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+                sprite.setCenter(x, y);
                 batch.begin();
                 sprite.draw(batch);
                 batch.end();
             }
 
-//            ColorPart colorPart = entity.getPart(ColorPart.class);
 //
 //            sr.setColor((float) colorPart.getR(), (float) colorPart.getG(), (float) colorPart.getB(), (float) colorPart.getA());
 //
