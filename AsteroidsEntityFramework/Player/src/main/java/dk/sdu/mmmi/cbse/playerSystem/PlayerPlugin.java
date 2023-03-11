@@ -40,10 +40,8 @@ public class PlayerPlugin implements IGamePluginService {
         playerShip.add(new PositionPart(x, y, radians));
         playerShip.add(new ColorPart());
 
-        String path = this.getClass().getPackageName();
-        path = path.replace(".", "/");
-        path = path + "/unnamed.atlas";
-        playerShip.add(new SpritePart(path, "ubuntu"));
+        playerShip.add(new SpritePart(this, "unnamed.atlas", "ubuntu"));
+
 
         playerShip.setRadius(8);
 

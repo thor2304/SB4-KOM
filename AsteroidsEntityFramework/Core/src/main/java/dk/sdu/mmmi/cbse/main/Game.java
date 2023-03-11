@@ -17,6 +17,7 @@ import dk.sdu.mmmi.cbse.common.services.EntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.GamePluginService;
 import dk.sdu.mmmi.cbse.common.services.PostEntityProcessingService;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
+import dk.sdu.mmmi.cbse.render.SpriteCache;
 
 public class Game
         implements ApplicationListener {
@@ -26,6 +27,8 @@ public class Game
 
     private final GameData gameData = new GameData();
     private final World world = new World();
+
+    private final SpriteCache spriteCache = new SpriteCache();
 
     @Override
     public void create() {
@@ -65,7 +68,7 @@ public class Game
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
 
-//        update();
+        update();
 
         draw();
 
@@ -84,12 +87,13 @@ public class Game
 
             if (entity.getPart(SpritePart.class) != null){
                 SpritePart imgPart = entity.getPart(SpritePart.class);
-                Sprite sprite = imgPart.getSprite();
+//                Sprite sprite = imgPart.getSprite();
+                Sprite sprite = spriteCache.getSprite(imgPart);
 
                 float x = entity.getShapeX()[0];
                 float y = entity.getShapeY()[0];
 
-                Gdx.gl.glClearColor((float) colorPart.getR(), (float) colorPart.getG(), (float) colorPart.getB(), (float) colorPart.getA());
+//                Gdx.gl.glClearColor((float) colorPart.getR(), (float) colorPart.getG(), (float) colorPart.getB(), (float) colorPart.getA());
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
                 sprite.setCenter(x, y);
