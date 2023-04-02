@@ -18,6 +18,8 @@ import dk.sdu.mmmi.cbse.common.services.PostEntityProcessingService;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.render.SpriteCache;
 
+import java.util.Arrays;
+
 public class Game
         implements ApplicationListener {
 
@@ -45,6 +47,18 @@ public class Game
         );
 
         GamePluginService.getInstance().startAll(gameData, world);
+
+        System.out.println("-\n".repeat(4));
+        String filePath = "dk\\sdu\\mmmi\\cbse";
+        System.out.println(Gdx.files.internal(filePath));
+        System.out.println(Gdx.files.internal(filePath).exists());
+        System.out.println(Gdx.files.internal(filePath).isDirectory());
+        System.out.println(Gdx.files.internal(filePath).path());
+        System.out.println(Gdx.files.internal(filePath).file());
+        System.out.println(Gdx.files.internal(filePath).file().getAbsolutePath());
+        System.out.println(Gdx.files.internal("dk").exists());
+        System.out.println(Gdx.files.internal("dk.sdu.mmmi.cbse.playerSystem").exists());
+        System.out.println("-\n".repeat(4));
     }
 
     @Override

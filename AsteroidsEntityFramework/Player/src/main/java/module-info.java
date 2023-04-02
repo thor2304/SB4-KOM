@@ -7,6 +7,8 @@ module Player {
     exports dk.sdu.mmmi.cbse.playerSystem;
     requires Common;
 
+    opens dk.sdu.mmmi.cbse.playerSystem.assets;
+
     provides IEntityProcessingService with PlayerControlSystem;
     provides IGamePluginService with PlayerPlugin;
 }
