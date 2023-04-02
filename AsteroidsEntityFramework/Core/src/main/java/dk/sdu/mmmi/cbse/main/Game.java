@@ -47,18 +47,6 @@ public class Game
         );
 
         GamePluginService.getInstance().startAll(gameData, world);
-
-        System.out.println("-\n".repeat(4));
-        String filePath = "dk\\sdu\\mmmi\\cbse";
-        System.out.println(Gdx.files.internal(filePath));
-        System.out.println(Gdx.files.internal(filePath).exists());
-        System.out.println(Gdx.files.internal(filePath).isDirectory());
-        System.out.println(Gdx.files.internal(filePath).path());
-        System.out.println(Gdx.files.internal(filePath).file());
-        System.out.println(Gdx.files.internal(filePath).file().getAbsolutePath());
-        System.out.println(Gdx.files.internal("dk").exists());
-        System.out.println(Gdx.files.internal("dk.sdu.mmmi.cbse.playerSystem").exists());
-        System.out.println("-\n".repeat(4));
     }
 
     @Override
