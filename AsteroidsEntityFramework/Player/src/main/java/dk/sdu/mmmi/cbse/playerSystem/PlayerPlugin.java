@@ -40,7 +40,7 @@ public class PlayerPlugin implements IGamePluginService {
         playerShip.add(new PositionPart(x, y, radians));
         playerShip.add(new ColorPart());
 
-        playerShip.add(new SpritePart(this, "unnamed.atlas", "deepin"));
+        playerShip.add(new SpritePart(playerShip, "unnamed.atlas", "deepin"));
 
 
         playerShip.setRadius(8);

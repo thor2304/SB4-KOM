@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.BulletSystem;
 
+import dk.sdu.mmmi.cbse.Bullet.BulletSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -10,7 +11,7 @@ import dk.sdu.mmmi.cbse.common.serviceInterfaces.IGamePluginService;
 
 import java.util.ArrayList;
 
-public class BulletPlugin implements IGamePluginService {
+public class BulletPlugin implements IGamePluginService, BulletSPI {
 
     private ArrayList<Entity> bullets = new ArrayList<>();
     private final int size = 15;
@@ -63,4 +64,9 @@ public class BulletPlugin implements IGamePluginService {
         }
     }
 
+    @Override
+    public Entity createBullet(Entity e) {
+        PositionPart p = e.getPart(PositionPart.class);
+        return createBullet(p);
+    }
 }
