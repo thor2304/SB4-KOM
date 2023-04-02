@@ -1,14 +1,11 @@
 package dk.sdu.mmmi.cbse.render;
 
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import dk.sdu.mmmi.cbse.common.data.entityparts.SpritePart;
 
-import java.io.File;
 import java.util.HashMap;
 
 public class SpriteCache {
@@ -23,7 +20,7 @@ public class SpriteCache {
     public Sprite getSprite(SpritePart forThis) {
         Sprite out = sprites.get(forThis);
 
-        if (out != null){
+        if (out != null && forThis.isSpriteTheSame()){
             return out;
         }
 
@@ -35,6 +32,7 @@ public class SpriteCache {
         }
         out = atlas.createSprite(forThis.getSpriteName());
         sprites.put(forThis, out);
+        forThis.setSpriteIsTheSame(true);
 
         return out;
     }

@@ -4,30 +4,35 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 
 import java.io.*;
-import java.net.URISyntaxException;
 
 
-public class SpritePart implements EntityPart{
+public class SpritePart implements EntityPart {
     private static final String ASSET_LOCATION = "Assets";
     private String spriteName;
-    private final String atlasPath;
-
     private final File atlasFile;
 
+    private boolean spriteIsTheSame = true;
 
-    public String getAtlasPath() {
-        return atlasPath;
-    }
 
     /**
+     * The atlas and the .png that it is pointing to, must be in the same folder.<br>
+     *
+     * <b>The folder must be opened in the module-info.java file</b>
+     * Otherwise, libgdx cannot access the files. <br><br>
+     *
+     * The recommended approach is to create the same directory/package structure in your resources folder, and then add a subfolder called assets.
+     * This subfolder can be opened up exclusively and this allows access to its contents. <br><br>
+     *
+     * If you follow this structure the atlasName provided would be: <br>
+     * <i>assets/yourName.atlas</i>
      *
      * @param instanceOfClassWithResource This class must have a ressources folder with an atlas and corresponding texture present
-     * @param atlasName Must be including the extension (.atlas)
-     * @param spriteName The name of the first sprite to use. Must be present in the Atlas
+     * @param atlasName                   Must be including the extension (.atlas)
+     * @param spriteName                  The name of the first sprite to use. Must be present in the Atlas
      */
     public SpritePart(Entity instanceOfClassWithResource, String atlasName, String spriteName) {
         File tempAtlasFile;
-        tempAtlasFile = createFile(instanceOfClassWithResource, atlasName);
+        atlasFile = createFile(instanceOfClassWithResource, atlasName);
 
         int extensionIndex = atlasName.lastIndexOf(".");
         String pngName = atlasName.substring(0, extensionIndex) + ".png";
@@ -35,31 +40,28 @@ public class SpritePart implements EntityPart{
 
 
         this.spriteName = spriteName;
-        String path = instanceOfClassWithResource.getClass().getPackageName();
-        path = path.replace(".", "/");
-        if (!atlasName.startsWith("/")){
-            atlasName = "/" + atlasName;
-        }
-        this.atlasPath = path + atlasName;
-        atlasFile = tempAtlasFile;
     }
 
     private static File createFile(Entity instanceOfClassWithResource, String fileName) {
-        File tempAtlasFile;
+        File out;
         try (InputStream inputStream = instanceOfClassWithResource.getClass().getResourceAsStream(fileName)) {
+            // The following two lines strip out the class name
             String[] packageNameParts = instanceOfClassWithResource.getClass().getName().split("\\.");
-            String packageIdentifier =packageNameParts[packageNameParts.length -1];
-            tempAtlasFile = new File(ASSET_LOCATION + "/" + packageIdentifier + "/" + fileName);
-            tempAtlasFile.getParentFile().mkdirs();
+            String className = packageNameParts[packageNameParts.length - 1];
 
-            try (OutputStream outputStream = new FileOutputStream(tempAtlasFile)) {
+            out = new File(ASSET_LOCATION + "/" + className + "/" + fileName);
+            // Create the directory structure, if it isn't present
+            out.getParentFile().mkdirs();
+
+            try (OutputStream outputStream = new FileOutputStream(out)) {
                 assert inputStream != null;
+                // Copy the contents from the resource into the target folder
                 outputStream.write(inputStream.readAllBytes());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return tempAtlasFile;
+        return out;
     }
 
 
@@ -73,9 +75,17 @@ public class SpritePart implements EntityPart{
 
     public void changeSprite(String spriteName) {
         this.spriteName = spriteName;
+        this.spriteIsTheSame = true;
     }
 
     public File getAtlasFile() {
         return atlasFile;
+    }
+
+    public void setSpriteIsTheSame(boolean newValue){
+        this.spriteIsTheSame = newValue;
+    }
+    public boolean isSpriteTheSame() {
+        return spriteIsTheSame;
     }
 }
