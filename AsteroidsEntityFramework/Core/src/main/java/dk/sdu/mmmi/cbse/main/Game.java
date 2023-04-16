@@ -76,8 +76,8 @@ public class Game
         for (Entity entity : world.getEntities()) {
             ColorPart colorPart = entity.getPart(ColorPart.class);
 
-            if (entity.getPart(SpritePart.class) != null){
-                SpritePart imgPart = entity.getPart(SpritePart.class);
+            SpritePart imgPart = entity.getPart(SpritePart.class);
+            if (imgPart != null){
                 Sprite sprite = spriteCache.getSprite(imgPart);
 
                 float x = entity.getShapeX()[0];
