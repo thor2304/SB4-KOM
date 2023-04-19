@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>dk.sdu.mmmi.cbse</groupId>
@@ -8,7 +9,7 @@
     </parent>
     <artifactId>Core</artifactId>
     <packaging>jar</packaging>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
@@ -22,7 +23,7 @@
             <url>https://maven.pkg.github.com/sweat-tek/ShadedLibGDX</url>
         </repository>
     </repositories>
-    
+
     <dependencies>
         <dependency>
             <groupId>dk.sdu.mmmi.cbse</groupId>
@@ -43,25 +44,45 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>Enemy</artifactId>
             <version>${project.version}</version>
-<!--            <scope>compile</scope>-->
+            <!--            <scope>compile</scope>-->
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Asteroid</artifactId>
             <version>${project.version}</version>
-<!--            <scope>compile</scope>-->
+            <!--            <scope>compile</scope>-->
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CircularCollisionSystem</artifactId>
             <version>${project.version}</version>
-<!--            <scope>compile</scope>-->
+            <!--            <scope>compile</scope>-->
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Bullet</artifactId>
             <version>${project.version}</version>
-<!--            <scope>compile</scope>-->
+            <!--            <scope>compile</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>5.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
     <build>
@@ -77,7 +98,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <includeArtifactIds>shadedlibgdx</includeArtifactIds>
+                            <includeArtifactIds>shadedlibgdx, spring-context, spring-core, spring-beans, commons-logging</includeArtifactIds>
                             <outputDirectory>../mods-mvn</outputDirectory>
                         </configuration>
                     </execution>

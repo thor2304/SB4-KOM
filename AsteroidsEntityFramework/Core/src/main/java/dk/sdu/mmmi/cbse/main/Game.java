@@ -12,13 +12,16 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.SpritePart;
+import dk.sdu.mmmi.cbse.common.serviceInterfaces.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.serviceInterfaces.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.serviceInterfaces.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.EntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.GamePluginService;
 import dk.sdu.mmmi.cbse.common.services.PostEntityProcessingService;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.render.SpriteCache;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class Game
         implements ApplicationListener {
@@ -30,6 +33,17 @@ public class Game
     private final World world = new World();
 
     private final SpriteCache spriteCache = new SpriteCache();
+
+    List<IGamePluginService> gamePlugins;
+    List<IEntityProcessingService> processingServices;
+    List<IPostEntityProcessingService> postProcessingServices;
+
+
+    public Game(List<IGamePluginService> gamePlugins, List<IEntityProcessingService> processingServices, List<IPostEntityProcessingService> postProcessingServices) {
+        this.gamePlugins = gamePlugins;
+        this.processingServices = processingServices;
+        this.postProcessingServices = postProcessingServices;
+    }
 
     @Override
     public void create() {
