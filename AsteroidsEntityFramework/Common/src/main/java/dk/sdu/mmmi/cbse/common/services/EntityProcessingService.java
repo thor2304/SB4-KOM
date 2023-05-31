@@ -10,12 +10,23 @@ import java.util.List;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class EntityProcessingService {
     private static EntityProcessingService service;
-    private ServiceLoader<IEntityProcessingService> loader;
+    private final ServiceLoader<IEntityProcessingService> loader;
+    private final List<IEntityProcessingService> services;
 
     private EntityProcessingService(){
         loader = ServiceLoader.load(IEntityProcessingService.class);
+        services = new ArrayList<>();
+
+        try{
+            for (IEntityProcessingService service : loader) {
+                services.add(service);
+            }
+        }catch (ServiceConfigurationError serviceConfigurationError){
+            serviceConfigurationError.printStackTrace();
+        }
     }
 
     public static synchronized EntityProcessingService getInstance(){
@@ -27,21 +38,11 @@ public class EntityProcessingService {
     }
 
     public void processAll(GameData gameData, World world){
-        try{
-            for (IEntityProcessingService service : loader) {
-                service.process(gameData, world);
-            }
-        }catch (ServiceConfigurationError serviceConfigurationError){
-            serviceConfigurationError.printStackTrace();
+        for (IEntityProcessingService service : services) {
+            service.process(gameData, world);
         }
     }
-
     public List<IEntityProcessingService> getAll(){
-        List<IEntityProcessingService> out = new ArrayList<>();
-        for (IEntityProcessingService service : loader) {
-            out.add(service);
-        }
-
-        return out;
+        return new ArrayList<>(services);
     }
 }

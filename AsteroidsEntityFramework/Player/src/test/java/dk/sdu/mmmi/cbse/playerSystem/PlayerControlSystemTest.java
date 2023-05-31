@@ -14,26 +14,26 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-class PlayerControlSystemTest {
+@SuppressWarnings("unchecked")
 
+class PlayerControlSystemTest {
     @Test()
     void process() {
+        // Create a Mockplayer
         Player underlyingPlayer = new Player();
         Player mockPlayer = mock(Player.class);
         MovingPart mockMovingPart = mock(MovingPart.class);
 
-        Entity mockEntity = mock(Entity.class);
-        MovingPart mockPart = mock(MovingPart.class);
-        when(mockEntity.getID()).thenReturn("2");
-
+        // Configure the mockPlayer
         when(mockPlayer.getPart(MovingPart.class)).thenReturn(mockMovingPart);
-        when(mockPlayer.getPart(PositionPart.class)).thenReturn(underlyingPlayer.getPart(PositionPart.class));
+        when(mockPlayer.getPart(PositionPart.class))
+                .thenReturn(underlyingPlayer.getPart(PositionPart.class));
         when(mockPlayer.getShapeX()).thenReturn(underlyingPlayer.getShapeX());
         when(mockPlayer.getShapeY()).thenReturn(underlyingPlayer.getShapeY());
         when(mockPlayer.getRadius()).thenReturn(underlyingPlayer.getRadius());
         when(mockPlayer.getID()).thenReturn("1");
 
-
+        // Create and configure the mockData
         GameData mockData = mock(GameData.class);
         GameKeys mockKeys = mock(GameKeys.class);
         when(mockData.getKeys()).thenReturn(mockKeys);
@@ -42,19 +42,21 @@ class PlayerControlSystemTest {
         when(mockKeys.isDown(GameKeys.RIGHT)).thenReturn(false);
         when(mockKeys.isDown(GameKeys.DOWN)).thenReturn(false);
 
-
+        // Create and configure the mockWorld
         World world = mock(World.class);
         List<Entity> players = new ArrayList<>();
         players.add(mockPlayer);
         when(world.getEntities(Player.class)).thenReturn(players);
 
+        // Run the test
         PlayerControlSystem underTest = new PlayerControlSystem();
         underTest.process(mockData, world);
 
+        // Verify the results
         verify(mockPlayer).getPart(MovingPart.class);
         verify(mockMovingPart).setUp(true);
         verify(mockMovingPart).setRight(false);
         verify(mockMovingPart).setLeft(false);
-
     }
 }
+

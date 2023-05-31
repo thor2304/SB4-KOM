@@ -2,13 +2,14 @@ package dk.sdu.mmmi.cbse.enemySystem;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.playerSystem.Player;
+import dk.sdu.mmmi.cbse.commonEnemy.CommonEnemy;
+import dk.sdu.mmmi.cbse.commonPlayer.CommonPlayer;
 
 /**
  *
  * @author corfixen
  */
-public class Enemy extends Entity {
+public class Enemy extends CommonEnemy {
     public final int outerSize;
     public final int innerSize;
 
@@ -23,7 +24,7 @@ public class Enemy extends Entity {
             // both take damage
             return;
         }
-        if (other instanceof Player){
+        if (other instanceof CommonPlayer){
             other.handleCollision(this, world);
             return;
         }

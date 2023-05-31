@@ -4,8 +4,8 @@ import dk.sdu.mmmi.cbse.playerSystem.PlayerControlSystem;
 import dk.sdu.mmmi.cbse.playerSystem.PlayerPlugin;
 
 module Player {
-    exports dk.sdu.mmmi.cbse.playerSystem;
     requires Common;
+    requires CommonPlayer;
 
     opens dk.sdu.mmmi.cbse.playerSystem.assets;
 

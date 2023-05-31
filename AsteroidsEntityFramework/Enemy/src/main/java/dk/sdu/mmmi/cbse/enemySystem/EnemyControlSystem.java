@@ -7,7 +7,8 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.serviceInterfaces.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.playerSystem.Player;
+import dk.sdu.mmmi.cbse.commonPlayer.CommonPlayer;
+
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class EnemyControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        List<Entity> playerList = world.getEntities(Player.class);
+        List<Entity> playerList = world.getEntities(CommonPlayer.class);
 
         boolean targetPlayer = playerList.size() >= 1;
 

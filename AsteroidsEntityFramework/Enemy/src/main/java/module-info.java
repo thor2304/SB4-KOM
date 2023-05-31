@@ -4,10 +4,11 @@ import dk.sdu.mmmi.cbse.enemySystem.EnemyControlSystem;
 import dk.sdu.mmmi.cbse.enemySystem.EnemyPlugin;
 
 module Enemy {
-    //exports dk.sdu.mmmi.cbse.enemySystem;
     requires Common;
-    requires Player;
+    requires CommonPlayer;
+    requires CommonEnemy;
 
     provides IEntityProcessingService with EnemyControlSystem;
     provides IGamePluginService with EnemyPlugin;
 }
+
