@@ -1,10 +1,12 @@
 package dk.sdu.mmmi.cbse.BulletSystem;
 
 import dk.sdu.mmmi.cbse.Bullet.BulletSPI;
+import dk.sdu.mmmi.cbse.Bullet.CommonBullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.serviceInterfaces.IGamePluginService;
@@ -14,7 +16,8 @@ import java.util.ArrayList;
 public class BulletPlugin implements IGamePluginService, BulletSPI {
 
     private ArrayList<Entity> bullets = new ArrayList<>();
-    private final int size = 15;
+    private final int size = 10;
+    private final float lifeTimeS = 1;
     public static final int verticeCount = 10;
 
     public BulletPlugin() {
@@ -22,7 +25,7 @@ public class BulletPlugin implements IGamePluginService, BulletSPI {
 
     @Override
     public void start(GameData gameData, World world) {
-        int count = 2;
+        int count = 0;
         // Add entities to the world
         for (int i = 0; i < count; i++) {
             PositionPart positionPart = new PositionPart((float) (100 + i * 30), 100 + i * 30, (float) (Math.PI * Math.random()));
@@ -31,29 +34,35 @@ public class BulletPlugin implements IGamePluginService, BulletSPI {
     }
 
     public void spawnBullet(PositionPart positionPart, World world){
-            Entity bullet = createBullet(positionPart);
+            Entity bullet = createBullet(positionPart, 0);
             bullets.add(bullet);
             world.addEntity(bullet);
     }
 
-    private Entity createBullet(PositionPart positionPart) {
-        float acceleration = 800;
+    private CommonBullet createBullet(PositionPart positionPart, float shooterSize) {
+        float acceleration = 8000;
         float maxSpeed = 1000;
 
-        Entity asteroid1 = new Bullet(size);
-        asteroid1.add(new MovingPart(0, acceleration, maxSpeed, 0));
-        asteroid1.add(positionPart);
-        asteroid1.add(new ColorPart(0, 91, 46, 1));
+        Bullet bullet = new Bullet(size);
+        bullet.add(new MovingPart(0, acceleration, maxSpeed, 0));
+        PositionPart position = positionPart.copy();
+        bullet.add(position);
+        bullet.add(new ColorPart(0, 91, 46, 1));
 
-        asteroid1.setRadius(size);
+        bullet.setRadius(size);
+        position.setX(position.getX() + (float) Math.cos(position.getRadians()) * (shooterSize + size)*2);
+        position.setY(position.getY() + (float) Math.sin(position.getRadians()) * (shooterSize + size)*2);
 
-        MovingPart movingPart = asteroid1.getPart(MovingPart.class);
+        MovingPart movingPart = bullet.getPart(MovingPart.class);
         movingPart.setUp(true);
 
-        asteroid1.setShapeX(new float[verticeCount]);
-        asteroid1.setShapeY(new float[verticeCount]);
+        bullet.setShapeX(new float[verticeCount]);
+        bullet.setShapeY(new float[verticeCount]);
 
-        return asteroid1;
+        LifePart lifePart = new LifePart(1, lifeTimeS);
+        bullet.add(lifePart);
+
+        return bullet;
     }
 
     @Override
@@ -65,8 +74,8 @@ public class BulletPlugin implements IGamePluginService, BulletSPI {
     }
 
     @Override
-    public Entity createBullet(Entity e) {
+    public CommonBullet createBullet(Entity e) {
         PositionPart p = e.getPart(PositionPart.class);
-        return createBullet(p);
+        return createBullet(p, e.getRadius());
     }
 }

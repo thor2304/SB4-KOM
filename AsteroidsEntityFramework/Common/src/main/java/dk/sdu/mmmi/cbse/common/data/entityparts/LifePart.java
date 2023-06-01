@@ -62,6 +62,8 @@ public class LifePart implements EntityPart {
             setIsHit(false);
         }
 
-
+        if (getExpiration() > 0) {
+            reduceExpiration(gameData.getDelta());
+        }
     }
 }

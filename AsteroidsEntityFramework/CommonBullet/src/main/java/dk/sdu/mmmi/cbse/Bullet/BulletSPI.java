@@ -8,5 +8,5 @@ public interface BulletSPI {
      * @param e The entity that the bullet will be spawned from
      * @return a new instance of CommonBullet, that can be added to the world
      */
-    Entity createBullet(Entity e);
+    CommonBullet createBullet(Entity e);
 }

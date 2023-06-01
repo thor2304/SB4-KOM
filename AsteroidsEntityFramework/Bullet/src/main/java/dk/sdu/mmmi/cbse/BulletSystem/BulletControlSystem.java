@@ -4,6 +4,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.ColorPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.serviceInterfaces.IEntityProcessingService;
@@ -20,10 +21,16 @@ public class BulletControlSystem implements IEntityProcessingService {
             PositionPart positionPart = bullet.getPart(PositionPart.class);
             MovingPart movingPart = bullet.getPart(MovingPart.class);
             ColorPart colorPart = bullet.getPart(ColorPart.class);
+            LifePart lifePart = bullet.getPart(LifePart.class);
 
             movingPart.process(gameData, bullet);
             positionPart.process(gameData, bullet);
             colorPart.process(gameData, bullet);
+            lifePart.process(gameData, bullet);
+
+            if(lifePart.getExpiration() <= 0){
+                world.removeEntity(bullet);
+            }
 
             assert bullet instanceof Bullet;
 

@@ -4,8 +4,10 @@ import dk.sdu.mmmi.cbse.playerSystem.PlayerControlSystem;
 import dk.sdu.mmmi.cbse.playerSystem.PlayerPlugin;
 
 module Player {
+    uses dk.sdu.mmmi.cbse.Bullet.BulletSPI;
     requires Common;
     requires CommonPlayer;
+    requires CommonBullet;
 
     opens dk.sdu.mmmi.cbse.playerSystem.assets;
 

@@ -24,6 +24,10 @@ public class PositionPart implements EntityPart {
         this.radians = radians;
     }
 
+    public PositionPart copy() {
+        return new PositionPart(x, y, radians);
+    }
+
     public float getX() {
         return x;
     }

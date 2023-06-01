@@ -1,11 +1,15 @@
 package dk.sdu.mmmi.cbse.playerSystem;
 
+import dk.sdu.mmmi.cbse.Bullet.BulletSPI;
+import dk.sdu.mmmi.cbse.Bullet.CommonBullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.serviceInterfaces.IEntityProcessingService;
+
+import java.util.ServiceLoader;
 
 import static dk.sdu.mmmi.cbse.common.data.GameKeys.*;
 
@@ -25,8 +29,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.setRight(gameData.getKeys().isDown(RIGHT));
             movingPart.setUp(gameData.getKeys().isDown(UP));
 
-            if (gameData.getKeys().isPressed(SPACE)){
-                shoot(positionPart, world);
+            if (gameData.getKeys().isDown(SPACE)){
+                shoot(player, world);
             }
             
             
@@ -62,12 +66,19 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
     }
 
-    public void shoot(PositionPart positionPart, World world){
+    public void shoot(Entity player, World world){
         System.out.println("Shooting!");
 
         // Maybe not here
         // we should probably send a message to another system that we desire to shoot.
         // Then the other system should call the spawnbullets method of BulletPlugin
+
+        ServiceLoader<BulletSPI> loader = ServiceLoader.load(BulletSPI.class);
+
+        for (BulletSPI bulletSPI : loader) {
+            CommonBullet bullet = bulletSPI.createBullet(player);
+            world.addEntity(bullet);
+        }
 
 
         //spawn a bullet
