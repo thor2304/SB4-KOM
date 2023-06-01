@@ -23,11 +23,12 @@ class PlayerControlSystemTest {
         Player underlyingPlayer = new Player();
         Player mockPlayer = mock(Player.class);
         MovingPart mockMovingPart = mock(MovingPart.class);
+        PositionPart mockPositionPart = mock(PositionPart.class);
 
         // Configure the mockPlayer
         when(mockPlayer.getPart(MovingPart.class)).thenReturn(mockMovingPart);
         when(mockPlayer.getPart(PositionPart.class))
-                .thenReturn(underlyingPlayer.getPart(PositionPart.class));
+                .thenReturn(mockPositionPart);
         when(mockPlayer.getShapeX()).thenReturn(underlyingPlayer.getShapeX());
         when(mockPlayer.getShapeY()).thenReturn(underlyingPlayer.getShapeY());
         when(mockPlayer.getRadius()).thenReturn(underlyingPlayer.getRadius());
