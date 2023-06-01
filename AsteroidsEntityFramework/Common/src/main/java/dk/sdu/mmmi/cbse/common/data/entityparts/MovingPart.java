@@ -33,6 +33,14 @@ public class MovingPart
         this.rotationSpeed = rotationSpeed;
     }
 
+    public MovingPart copy() {
+        MovingPart out = new MovingPart(deceleration, acceleration, maxSpeed, rotationSpeed);
+        out.setLeft(left);
+        out.setRight(right);
+        out.setUp(up);
+        return out;
+    }
+
     public void setDeceleration(float deceleration) {
         this.deceleration = deceleration;
     }

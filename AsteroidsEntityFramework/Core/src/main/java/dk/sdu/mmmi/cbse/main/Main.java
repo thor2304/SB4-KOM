@@ -7,7 +7,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class Main {
 	
 	public static void main(String[] args) {
-		AnnotationConfigApplicationContext springContext = new AnnotationConfigApplicationContext(SpringConfigurator.class);
+		AnnotationConfigApplicationContext springContext =
+				new AnnotationConfigApplicationContext(SpringConfigurator.class);
 
 		Lwjgl3ApplicationConfiguration cfg =
 				new Lwjgl3ApplicationConfiguration();

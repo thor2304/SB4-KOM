@@ -54,4 +54,8 @@ public class ColorPart implements EntityPart {
         //intentionally blank, the color does not need processing as of now
         // if a spaceship will be changing colors during the game, this is where to add it
     }
+
+    public ColorPart copy() {
+        return new ColorPart(getR(), getG(), getB(), getA());
+    }
 }

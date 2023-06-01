@@ -17,3 +17,4 @@ module Core {
     uses dk.sdu.mmmi.cbse.common.serviceInterfaces.IGamePluginService;
     uses dk.sdu.mmmi.cbse.common.serviceInterfaces.IPostEntityProcessingService;
 }
+

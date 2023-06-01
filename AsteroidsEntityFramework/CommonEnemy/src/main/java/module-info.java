@@ -3,3 +3,4 @@ module CommonEnemy {
 
     requires Common;
 }
+

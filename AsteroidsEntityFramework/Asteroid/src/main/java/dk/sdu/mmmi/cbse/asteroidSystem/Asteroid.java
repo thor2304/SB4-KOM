@@ -10,6 +10,7 @@ import dk.sdu.mmmi.cbse.commonAsteroid.CommonAsteroid;
  */
 public class Asteroid extends CommonAsteroid {
     public final int size;
+    private boolean shouldSplit = false;
 
     public Asteroid(int outerSize) {
         this.size = outerSize;
@@ -17,10 +18,10 @@ public class Asteroid extends CommonAsteroid {
 
     @Override
     public void handleCollision(Entity other, World world) {
-        if (other instanceof Asteroid){
-            //split both?
-            return;
-        }
-        other.handleCollision(this, world);
+        shouldSplit = true;
+    }
+
+    public boolean shouldSplit() {
+        return shouldSplit;
     }
 }
