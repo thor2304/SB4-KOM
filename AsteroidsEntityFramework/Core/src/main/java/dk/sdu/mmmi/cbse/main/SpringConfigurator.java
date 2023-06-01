@@ -6,9 +6,13 @@ import dk.sdu.mmmi.cbse.common.services.PostEntityProcessingService;
 import org.springframework.context.annotation.Bean;
 
 public class SpringConfigurator {
-
     @Bean
     public Game gameCreator(){
-        return new Game(GamePluginService.getInstance().getAll(), EntityProcessingService.getInstance().getAll(), PostEntityProcessingService.getInstance().getAll());
+        return new Game(
+                GamePluginService.getInstance().getAll(),
+                EntityProcessingService.getInstance().getAll(),
+                PostEntityProcessingService.getInstance().getAll()
+        );
     }
 }
+
